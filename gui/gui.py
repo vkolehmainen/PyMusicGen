@@ -1,11 +1,6 @@
-'''
-Created on 7.10.2015
-
-@author: Ville
-'''
-
 import sys, os
 from PyQt4 import QtGui
+import menubar
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -23,6 +18,7 @@ class GUI(QtGui.QMainWindow):
         super(GUI, self).__init__()
         
         self.create_widgets()
+        self.init_menu()
         self.init_layout()
         self.init_core()
         
@@ -30,7 +26,12 @@ class GUI(QtGui.QMainWindow):
         """Creates the widgets."""
         
         pass
-
+    
+    def init_menu(self):
+        """Initializes the menu bar."""
+        
+        menubar.add_menu(self.menuBar(), self)
+    
     def init_layout(self):
         """Initializes the layout."""              
 
