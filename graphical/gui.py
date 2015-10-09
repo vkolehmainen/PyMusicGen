@@ -1,6 +1,6 @@
 import sys, os
 from PyQt4 import QtGui
-import menubar
+from graphical.menubar import add_menu
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -30,7 +30,7 @@ class GUI(QtGui.QMainWindow):
     def init_menu(self):
         """Initializes the menu bar."""
         
-        menubar.add_menu(self.menuBar(), self)
+        add_menu(self.menuBar(), self)
     
     def init_layout(self):
         """Initializes the layout."""              
