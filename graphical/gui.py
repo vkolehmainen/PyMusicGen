@@ -1,6 +1,14 @@
 import sys, os
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
+
 from graphical.menubar import add_menu
+from graphical.melodyview import MelodyView
+from graphical.profileselect import ProfileSelect
+from graphical.profileview import ProfileView
+from graphical.rhythmview import RhythmView
+from graphical.statusbar import StatusBar
+from graphical.visualizer import Visualizer
+
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -25,7 +33,33 @@ class GUI(QtGui.QMainWindow):
     def create_widgets(self):
         """Creates the widgets."""
         
-        pass
+        # left widgets
+        self.status_bar = StatusBar()
+        self.profile_view = ProfileView()
+        self.visualizer = Visualizer()
+        
+        # right widgets
+        self.profile_select = ProfileSelect()   
+        self.rhythm_view = RhythmView()  
+        self.melody_view = MelodyView()
+            
+        # left splitter
+        self.splitter1 = QtGui.QSplitter(QtCore.Qt.Vertical)
+        self.splitter1.addWidget(self.status_bar)
+        self.splitter1.addWidget(self.profile_view)
+        self.splitter1.addWidget(self.visualizer)
+        
+        # right splitter
+        self.splitter2 = QtGui.QSplitter(QtCore.Qt.Vertical)
+        self.splitter2.addWidget(self.profile_select)
+        self.splitter2.addWidget(self.rhythm_view)
+        self.splitter2.addWidget(self.melody_view)
+              
+        # joins the left and right splitters together  
+        self.splitter3 = QtGui.QSplitter(QtCore.Qt.Horizontal)
+        self.splitter3.addWidget(self.splitter1)
+        self.splitter3.addWidget(self.splitter2)
+        
     
     def init_menu(self):
         """Initializes the menu bar."""
@@ -36,9 +70,13 @@ class GUI(QtGui.QMainWindow):
         """Initializes the layout."""              
 
         self.statusBar().showMessage('Ready')
+        
+        self.setCentralWidget(self.splitter3)
+        QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('Cleanlooks'))
 
         self.setGeometry(150, 90, 1600, 900)
-        self.setWindowTitle('PyMusicGen')    
+        self.setWindowTitle('PyMusicGen')
+        self.setBackgroundRole(QtGui.QPalette.Base)  
         self.show()
         
     def init_core(self):
