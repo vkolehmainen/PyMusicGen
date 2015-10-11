@@ -1,5 +1,6 @@
 
 from PyQt4.QtSql import QSqlDatabase, QSqlQuery
+from PyQt4.QtGui import QStringListModel
 
 DATABASE_NAME = "progressions.db" # Saa vaihtaa
 
@@ -26,7 +27,7 @@ class DatabaseManager:
         query.prepare("CREATE TABLE IF NOT EXISTS Progressions(song TEXT PRIMARY KEY, pattern TEXT, key TEXT)")
         query.exec_()
     
-    def get_song(self, song_name):
+    def get_song_pattern(self, song_name):
         """Get chord pattern of given song
         @param song_name: name of the song in database
         @type song_name: String
@@ -58,5 +59,53 @@ class DatabaseManager:
             patterns.append(query.value(0))
         return patterns
     
-        
+    def get_song_listmodel(self, key = None, parent = None):
+        """Create and return a QStringListModel of songs in database
+        By default all songs are included
+        @param key: Include only songs in given key
+        @param key: String
+        @return: List model to be passed to QListView
+        @type return: QStringListModel"""
+        if key == None:
+            query = QSqlQuery()
+            query.prepare("SELECT song FROM Patterns")
+            success = query.exec_()
+            if not success:
+                pass  # TODO
+            songs = [], 
+            while query.next():
+                songs.append(query.value(0))
+        else:
+            songs = self.get_by_key(key)
+        return QStringListModel(songs, parent)
     
+    def remove_song(self, song_name):
+        """Removes given song from database
+        @param song_name: name of the song to be removed
+        @type song_name: String"""
+        query = QSqlQuery()
+        query.prepare("DELETE FROM Patterns WHERE song == :song")
+        query.bindValue(":song", song_name)
+        success = query.exec_()
+        if not success:
+            return  False # TODO
+        return True
+    
+    def add_song(self, song_name, pattern, key):
+        """Add a new song to database
+        @param song_name: name of the song shown in QListView
+        @type song_name: String
+        @param pattern: chord pattern of the song
+        @type pattern: String
+        @param key: key of the song. Used as filter parameter
+        @type key: String"""
+        query = QSqlQuery()
+        query.prepare("INSERT INTO Patterns(song, pattern, key) VALUES (:song, :pattern, :key)")
+        query.bindValue(":song", song_name)
+        query.bindValue(":pattern", pattern)
+        query.bindValue(":key", key)
+        success = query.exec_()
+        if not success:
+            return False  # TODO
+        return True
+        
