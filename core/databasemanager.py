@@ -31,7 +31,8 @@ class DatabaseManager:
         """Get chord pattern of given song
         @param song_name: name of the song in database
         @type song_name: String
-        @return: String"""
+        @return: pattern
+        @type return: String"""
         query = QSqlQuery()
         query.prepare("SELECT pattern FROM Progressions WHERE song == :song")
         query.bindValue(":song", song_name)
@@ -41,6 +42,22 @@ class DatabaseManager:
         query.next()  # Get only the first result as song name is primary key.
         return query.value(0) # pattern is the only column in result set.
     
+    def get_by_key(self, key):
+        """Get all chord patterns in given key
+        @param key: Song key e.g. C major
+        @type key: String
+        @return: all patterns in key
+        @type return: list"""
+        query = QSqlQuery()
+        query.prepare("SELECT pattern FROM Progressions WHERE key == :key")
+        query.bindValue(":key", key)
+        success = query.exec_()
+        if not success:
+            pass  # TODO
+        patterns = [] 
+        while query.next():
+            patterns.append(query.value(0))
+        return patterns
     
         
     
