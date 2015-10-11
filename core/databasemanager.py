@@ -1,6 +1,5 @@
 
 from PyQt4.QtSql import QSqlDatabase, QSqlQuery
-from _csv import Error
 
 DATABASE_NAME = "progressions.db" # Saa vaihtaa
 
@@ -38,7 +37,7 @@ class DatabaseManager:
         query.bindValue(":song", song_name)
         success = query.exec_()
         if not success:
-            pass  # Should raise a some kind of Error
+            pass  # Should raise a some kind of error
         query.next()  # Get only the first result as song name is primary key.
         return query.value(0) # pattern is the only column in result set.
     
