@@ -25,7 +25,9 @@ class DatabaseManager:
         # Tablen nimen saa vaihtaa
         query = QSqlQuery()
         query.prepare("CREATE TABLE IF NOT EXISTS Progressions(song TEXT PRIMARY KEY, pattern TEXT, key TEXT)")
-        query.exec_()
+        success = query.exec_()
+        if not success:
+            pass  # TODO
     
     def get_song_pattern(self, song_name):
         """Get chord pattern of given song
@@ -38,7 +40,7 @@ class DatabaseManager:
         query.bindValue(":song", song_name)
         success = query.exec_()
         if not success:
-            pass  # Should raise a some kind of error
+            pass  # TODO
         query.next()  # Get only the first result as song name is primary key.
         return query.value(0) # pattern is the only column in result set.
     
@@ -76,7 +78,7 @@ class DatabaseManager:
             while query.next():
                 songs.append(query.value(0))
         else:
-            songs = self.get_by_key(key)
+            songs = self.get_by_key(key)  # Ajatusvirhe
         return QStringListModel(songs, parent)
     
     def remove_song(self, song_name):
@@ -93,7 +95,7 @@ class DatabaseManager:
     
     def add_song(self, song_name, pattern, key):
         """Add a new song to database
-        @param song_name: name of the song shown in QListView
+        @param song_name: name of the song to be shown in QListView
         @type song_name: String
         @param pattern: chord pattern of the song
         @type pattern: String
