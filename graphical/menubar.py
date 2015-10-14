@@ -1,7 +1,7 @@
 from PyQt4 import QtGui
 import dialogs
 
-def add_menu(menubar, GUI, db_handler):
+def add_menu(menubar, GUI):
     """Populates the menubar of the main window."""
     
     exitAction = QtGui.QAction(QtGui.QIcon('exit.png'), '&Exit', GUI)        
@@ -21,10 +21,10 @@ def add_menu(menubar, GUI, db_handler):
     profile_menu.addAction(addAction)
     
     addSongAction = QtGui.QAction('&Add song', GUI)
-    addSongAction.triggered.connect(lambda: dialogs.add_song(db_handler))
+    addSongAction.triggered.connect(dialogs.add_song)
     
     song_menu = menubar.addMenu('&Songs')
-    profile_menu.addAction(addSongAction)
+    song_menu.addAction(addSongAction)
     
     
     

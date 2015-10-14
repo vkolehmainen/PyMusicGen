@@ -10,19 +10,23 @@ class AddSongDialog(QtGui.QDialog):
     
     def __init__(self):
         super(AddSongDialog, self).__init__()
+        self.fname = None
         self.init_layout()
+        self.exec()
+        
+    def open_file_dialog(self):
+            self.fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file')
+            self.fname = self.fdialog
+            self.file_label.setText(self.fname)
     
     def init_layout(self):
-        
-        def open_file_dialog(self):
-            fname = QtGui.QFileDialog.getOpenFileName(self, 'Select file')
-            self.fname = fname
-            
+    
         grid = QtGui.QGridLayout()
         
         self.name_field = QtGui.QLineEdit()
         self.key_field = QtGui.QLineEdit()
         
+        self.file_label = QtGui.QLabel()
         file_button = QtGui.QPushButton('Select')
         file_button.clicked.connect(self.open_file_dialog)
     
@@ -37,19 +41,23 @@ class AddSongDialog(QtGui.QDialog):
         grid.addWidget(self.key_field,  1, 1)
         grid.addWidget(file_button, 2, 0, 1, 2)
         grid.addWidget(buttons, 3, 0)
-    
-def add_song(db_manager):
-    dialog = AddSongDialog(db_manager)
+        grid.addWidget(self.file_label, 3, 1)
+        
+        self.setLayout(grid)
+        
+def add_song(self):
+    dialog = AddSongDialog()
     name = dialog.name_field.text()
     key = dialog.key_field.text()
     fname = dialog.fname
     
-    if not name or not key:
+    if not name or not key or not fname:
         pass
-    try:
-        with open(fname, 'r') as f:
-            chords = f.read() 
-    except IOError as e:
-        print(e)
+    else:
+        try:
+            with open(fname, 'r') as f:
+                chords = f.read() 
+                print(name + "\n" + key + "\n" + chords)
+        except IOError as e:
+            print(e)
         
-    print(name + "\n", key + "\n", chords)
