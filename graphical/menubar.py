@@ -13,4 +13,11 @@ def add_menu(menubar, GUI):
     
     
     
+    addAction = QtGui.QAction('&Add profile', GUI)
+    addAction.triggered.connect(GUI.profile_view.profile_dialog)
+    
+    profile_menu = menubar.addMenu('&Profiles')
+    profile_menu.addAction(addAction)
+    
+    
     

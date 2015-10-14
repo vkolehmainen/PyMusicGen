@@ -13,3 +13,7 @@ class ProfileView(Qt.QWidget):
         self.setAutoFillBackground(True)
         
         self.setLayout(self.layout)
+        
+    def profile_dialog(self):
+        
+        pass
