@@ -12,10 +12,11 @@ class AddSongDialog(QtGui.QDialog):
         super(AddSongDialog, self).__init__()
         self.fname = None
         self.init_layout()
+        self.setWindowTitle('Add new song')
         self.exec()
         
     def open_file_dialog(self):
-            self.fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file')
+            self.fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file', "", "Text files (*.txt)")
             self.fname = self.fdialog
             self.file_label.setText(self.fname)
     
