@@ -78,7 +78,15 @@ class DatabaseManager:
             while query.next():
                 songs.append(query.value(0))
         else:
-            songs = self.get_by_key(key)  # Ajatusvirhe
+            query = QSqlQuery()
+            query.prepare("SELECT song FROM Patterns WHERE key == :key")
+            query.bindValue(":key", key)
+            success = query.exec_()
+            if not success:
+                pass  # TODO
+            songs = [], 
+            while query.next():
+                songs.append(query.value(0))  # Ajatusvirhe
         return QStringListModel(songs, parent)
     
     def remove_song(self, song_name):
