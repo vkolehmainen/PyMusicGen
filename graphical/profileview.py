@@ -14,6 +14,6 @@ class ProfileView(Qt.QWidget):
         
         self.setLayout(self.layout)
         
-    def profile_dialog(self):
         
-        pass
+
+        
