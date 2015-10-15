@@ -4,7 +4,7 @@ Created on 15.10.2015
 @author: Niklas
 '''
 from PyQt4 import QtGui
-import graphical.dialogs as dialogs
+import gui.dialogs as dialogs
 
 class SongsDockWidget(QtGui.QDockWidget):
     def __init__(self):

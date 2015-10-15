@@ -1,5 +1,6 @@
-'''
-Created on 8.10.2015
 
-@author: Ville
-'''
+class Midi():
+    
+    def __init__(self):
+        
+        pass

@@ -1,5 +1,5 @@
 from PyQt4 import QtGui
-import graphical.dialogs as dialogs
+import gui.dialogs as dialogs
 
 def add_menu(menubar, GUI):
     """Populates the menubar of the main window."""

@@ -1,14 +1,14 @@
 import sys, os
 from PyQt4 import QtGui, QtCore
 
-from graphical.menubar import add_menu
-from graphical.melodyview import MelodyView
-from graphical.profileselect import ProfileSelect
-from graphical.profileview import ProfileView
-from graphical.rhythmview import RhythmView
-from graphical.statusbar import StatusBar
-from graphical.visualizer import Visualizer
-from graphical.leftdockwidget import SongsDockWidget
+from gui.menubar import add_menu
+from gui.melodyview import MelodyView
+from gui.profileselect import ProfileSelect
+from gui.profileview import ProfileView
+from gui.rhythmview import RhythmView
+from gui.statusbar import StatusBar
+from gui.visualizer import Visualizer
+from gui.leftdockwidget import SongsDockWidget
 
 
 os.chdir(os.path.dirname(sys.argv[0]))
@@ -16,15 +16,15 @@ os.chdir(os.path.dirname(sys.argv[0]))
 def main():
 
     app = QtGui.QApplication(sys.argv)
-    main_window = GUI()
+    main_window = MainWindow()
     sys.exit(app.exec_())
 
-class GUI(QtGui.QMainWindow):
+class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         """Implements the game's user interface and its functionalities."""
         
-        super(GUI, self).__init__()
+        super(MainWindow, self).__init__()
         
         self.create_widgets()
         self.init_menu()
