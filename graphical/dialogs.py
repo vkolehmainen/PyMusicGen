@@ -4,7 +4,7 @@ Created on 14.10.2015
 @author: Niklas
 '''
 from PyQt4 import QtGui
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QMimeData
 
 class AddSongDialog(QtGui.QDialog):
     
@@ -19,8 +19,8 @@ class AddSongDialog(QtGui.QDialog):
         
     def open_file_dialog(self):
             """Shows file explorer"""
-            self.fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file', "", "Text files (*.txt)")
-            self.fname = self.fdialog
+            fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file', "", "Text files (*.txt)")
+            self.fname = fdialog
             self.file_label.setText(self.fname)
     
     def init_layout(self): 
@@ -83,6 +83,37 @@ class ProfileDialog(QtGui.QDialog):
         
         self.setWindowTitle('Profile dialog')
         
+class SelectSongDialog(QtGui.QDialog):
+    """Shows select song dialog"""
+    
+    def __init__(self):
+        super(QtGui.QDialog, self).__init__()
+        self.init_layout()
+        self.setWindowTitle('Select songs to add')
+        self.exec()
+    
+    def init_layout(self):
+        layout = QtGui.QVBoxLayout()
+        
+        list_view = self.init_view()
+        list_view.setDragEnabled(True)
+        buttons = QtGui.QDialogButtonBox(
+            QtGui.QDialogButtonBox.Ok | QtGui.QDialogButtonBox.Cancel, Qt.Horizontal, self)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        
+        layout.addWidget(list_view)
+        layout.addWidget(buttons)
+        
+        self.setLayout(layout)
+    
+    def init_view(self):
+        test_values = ["Test song " + str(i+1) for i in range(10)]
+        test_model = QtGui.QStringListModel(test_values)
+        list_view = QtGui.QListView()
+        list_view.setModel(test_model)
+        return list_view
+    
 def add_song(self):
     "Opens a dialog to add a new song."""
     
@@ -108,6 +139,12 @@ def add_profile(self):
     name = dialog.name_field.text()
     key = dialog.channel_field.currentText()
     print(name, key)
+    
+def select_songs(self):
+    """Opens a dialog to select new songs"""
+    dialog = SelectSongDialog()
+    
+    
     
     #TODO: empty field handling
         
