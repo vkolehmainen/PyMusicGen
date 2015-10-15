@@ -9,6 +9,8 @@ from PyQt4.QtCore import Qt
 class AddSongDialog(QtGui.QDialog):
     
     def __init__(self):
+        """Shows the song dialog"""
+        
         super(AddSongDialog, self).__init__()
         self.fname = None
         self.init_layout()
@@ -16,11 +18,13 @@ class AddSongDialog(QtGui.QDialog):
         self.exec()
         
     def open_file_dialog(self):
+            """Shows file explorer"""
             self.fdialog = QtGui.QFileDialog.getOpenFileName(self, 'Select file', "", "Text files (*.txt)")
             self.fname = self.fdialog
             self.file_label.setText(self.fname)
     
     def init_layout(self): 
+        """Initializes the layout."""
         grid = QtGui.QGridLayout()
         
         self.name_field = QtGui.QLineEdit()

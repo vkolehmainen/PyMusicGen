@@ -8,6 +8,7 @@ from graphical.profileview import ProfileView
 from graphical.rhythmview import RhythmView
 from graphical.statusbar import StatusBar
 from graphical.visualizer import Visualizer
+from graphical.leftdockwidget import SongsDockWidget
 
 
 os.chdir(os.path.dirname(sys.argv[0]))
@@ -37,6 +38,7 @@ class GUI(QtGui.QMainWindow):
         self.status_bar = StatusBar()
         self.profile_view = ProfileView()
         self.visualizer = Visualizer()
+        self.songs_dock = SongsDockWidget()
         
         # right widgets
         self.profile_select = ProfileSelect()   
@@ -72,6 +74,7 @@ class GUI(QtGui.QMainWindow):
         self.statusBar().showMessage('Ready')
         
         self.setCentralWidget(self.splitter3)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.songs_dock)
         QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('Cleanlooks'))
 
         self.setGeometry(150, 90, 1600, 900)
