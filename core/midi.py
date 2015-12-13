@@ -6,24 +6,12 @@ pygame.midi.init()
 
 print( "There are " + str(pygame.midi.get_count()) + " MIDI devices")
 
-print("The default input device number is "  +
-str(pygame.midi.get_default_input_id()))
-
-print("The default output device number is "  +
-str(pygame.midi.get_default_output_id()))
-
-print( "The default input device info is " +
-str(pygame.midi.get_device_info(pygame.midi.get_default_input_id())))
-
-print("The default output device info is " +
-str(pygame.midi.get_device_info(pygame.midi.get_default_output_id())))
-
-print( "The current time on the PortMidi timer is " +
-str(pygame.midi.time()) + " ms")
+for device_id in range(0, pygame.midi.get_count()):
+    print("At ID " + str(device_id) + " the device info is: " + str(pygame.midi.get_device_info(device_id)))
 
 class Midi():
     """
-    INSTRUCTIONS
+    INSTRUCTIONS FOR 3RD PARTY SOFTWARE OUTPUT
     
     You need to install PyGame for Python 3.4 to get this module working.
     To send MIDI-messages to a MIDI-player you need loopMIDI. It acts as a virtual MIDI cable.
@@ -31,18 +19,33 @@ class Midi():
     1. dl/install PyGame: https://bitbucket.org/pygame/pygame/downloads       (pygame-1.9.2a0-hg_ea3b3bb8714a.win32-py3.4.msi confirmed working)
     2. dl/install loopMIDI: http://www.tobias-erichsen.de/software/loopmidi.html
     3. create a port in loopMIDI
-    4. check which DEVICE it represents in pygame.midi by calling "" print(pygame.midi.get_device_info(X)) "" with different values
-    5. set that as the output device of pygame.midi (in __init__)
-    6. map the same port to be the input port of the device (or software synth) of your choice
+    4. check which device id it represents in pygame.midi
+    5. set that as the output device of pygame.midi (at row 113)
+    6. map the same port to be the input port of the software synth of your choice
     
-    Python/pygame.midi:  output--->    loopMIDI    --->input: some MIDI player    
+    pygame.midi:  output--->    loopMIDI    --->input: some MIDI player
+    
+    INSTRUCTIONS FOR HARDWARE MIDI OUTPUT
+    
+    1. dl/install PyGame: https://bitbucket.org/pygame/pygame/downloads       (pygame-1.9.2a0-hg_ea3b3bb8714a.win32-py3.4.msi confirmed working)
+    2. plug your synthesizer in
+    3. check which device id it represents in pygame.midi
+    4. set that as the output device of pygame.midi (at row 113)
+    
+    INSTRUCTIONS FOR MICROSOFT GS WAVETABLE SYNTH
+    
+    1. dl/install PyGame: https://bitbucket.org/pygame/pygame/downloads       (pygame-1.9.2a0-hg_ea3b3bb8714a.win32-py3.4.msi confirmed working) 
+    2. check which device id "Microsoft GS Wavetable Synth" represents in pygame.midi
+    3. set that as the output device of pygame.midi (at row 113)
+    
+    May not work in all Windows versions
     """
      
-    def __init__(self):
+    def __init__(self, device_id):
         """Sends MIDI note commands to the output device."""
         
         # This will vary depending on your other MIDI devices
-        self.output = pygame.midi.Output(5)
+        self.output = pygame.midi.Output(device_id)
         
         # Some queue structure that the note_off commands will be sent to
         self.queue = ""
@@ -50,17 +53,25 @@ class Midi():
     def play_chord(self, chord):
         """A METHOD FOR TESTING PURPOSES ONLY, NOT INTENDED TO BE IN LATER VERSIONS."""
         #Settings are optimized for chords with a long release time
-        self.output.note_on(note, 50)
-        self.output.note_on(note + chord[0], 50)
-        self.output.note_on(note + chord[1], 50)
+        vol = random.randint(30, 70)
+        self.output.note_on(note, vol, 6)
+        self.output.note_on(note + chord[0], 50 + vol, 6)
+        self.output.note_on(note + chord[1], 50 + vol, 6)
         if len(chord) > 2:
             self.output.note_on(note + chord[2], 50)
+         
+        a = random.choice([-5, 0, 7, 12])
+        b = random.randint(1,3)
         
-        time.sleep(random.randint(2,3))
-        
+        time.sleep(random.randint(1,3))
+        self.output.note_on(note + a, 50)
+        time.sleep(random.randint(1,3))
+     
         self.output.note_off(note)
         self.output.note_off(note + chord[0])
         self.output.note_off(note + chord[1])
+        self.output.note_off(note + a)
+        self.output.note_off(note + b)
         
         if len(chord) > 2:
             self.output.note_off(note + chord[2])
@@ -97,8 +108,8 @@ class Midi():
         chords = [[3, 7], [4, 7], [3, 6], [5, 7], [5, 12], [4, 9, 12], [3, 7, 10]]
     
         return random.choice(chords)
-        
-midi = Midi()
+  
+midi = Midi(1)
 note = 60
 
 #Loop that starts from MIDI note 60 and randomly increases/decreases the base note and plays chords relative to it
@@ -106,8 +117,6 @@ while True:
             
     next = midi.choose_chord()             
     midi.play_chord(next)
-
-    time.sleep(random.randint(1,3))
     
-    note += random.randint(-5, 5)
+    note += random.randint(-2, 2)
     
