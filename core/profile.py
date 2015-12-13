@@ -11,3 +11,8 @@ class Profile():
         self.melody_gen = MelodyGenerator
         self.channel = channel
         
+    def get_playlist(self, chord):
+        """Builds the playlist for this profile using the rhythm and melody generators."""
+              
+        return "playlist"
+        

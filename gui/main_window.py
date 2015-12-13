@@ -9,7 +9,7 @@ from gui.rhythmview import RhythmView
 from gui.statusbar import StatusBar
 from gui.visualizer import Visualizer
 from gui.leftdockwidget import SongsDockWidget
-
+from core.logic import Logic
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -85,6 +85,7 @@ class MainWindow(QtGui.QMainWindow):
     def init_core(self):
         """Initializes the core."""
         
+        self.logic = Logic()
         pass
 
 

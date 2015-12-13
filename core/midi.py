@@ -2,13 +2,6 @@ import pygame.midi
 import time
 import random
 
-pygame.midi.init()
-
-print( "There are " + str(pygame.midi.get_count()) + " MIDI devices")
-
-for device_id in range(0, pygame.midi.get_count()):
-    print("At ID " + str(device_id) + " the device info is: " + str(pygame.midi.get_device_info(device_id)))
-
 class Midi():
     """
     INSTRUCTIONS FOR 3RD PARTY SOFTWARE OUTPUT
@@ -43,7 +36,7 @@ class Midi():
      
     def __init__(self, device_id):
         """Sends MIDI note commands to the output device."""
-        
+        pygame.midi.init()
         # This will vary depending on your other MIDI devices
         self.output = pygame.midi.Output(device_id)
         
@@ -76,7 +69,7 @@ class Midi():
         if len(chord) > 2:
             self.output.note_off(note + chord[2])
             
-    def play_note(self, profile, note, length, velocity):
+    def play_note(self, channel, note, length, velocity):
         """Sends a note_on command and pushes the note_off command to the queue.
         
         @param profile: the instrument profile that plays the note
@@ -92,7 +85,6 @@ class Midi():
         @param velocity: the velocity of the note
         @type velocity: int
         """
-        channel = profile.channel
         
         self.output.note_on(note, velocity, channel)
         
@@ -108,15 +100,23 @@ class Midi():
         chords = [[3, 7], [4, 7], [3, 6], [5, 7], [5, 12], [4, 9, 12], [3, 7, 10]]
     
         return random.choice(chords)
-  
-midi = Midi(1)
-note = 60
 
-#Loop that starts from MIDI note 60 and randomly increases/decreases the base note and plays chords relative to it
-while True:
-            
-    next = midi.choose_chord()             
-    midi.play_chord(next)
+if __name__ == "__main__":
+    """This is a test section that is executed only when running this module directly."""
+    pygame.midi.init()
+    print( "There are " + str(pygame.midi.get_count()) + " MIDI devices")
+
+    for device_id in range(0, pygame.midi.get_count()):
+        print("At ID " + str(device_id) + " the device info is: " + str(pygame.midi.get_device_info(device_id)))
     
-    note += random.randint(-2, 2)
+    midi = Midi(1)
+    note = 60
+    
+    #Loop that starts from MIDI note 60 and randomly increases/decreases the base note and plays chords relative to it
+    while True:
+                
+        next = midi.choose_chord()             
+        midi.play_chord(next)
+        
+        note += random.randint(-2, 2)
     
