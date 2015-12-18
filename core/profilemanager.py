@@ -7,14 +7,14 @@ class ProfileManager():
         
         self.profiles = []
         
-    def add_profile(self, name):
+    def add_profile(self, name, channel):
         """Adds a new profile.
         
         @param name: the name of the new profile
         @type name: string
         """
         
-        new_profile = Profile(name)
+        new_profile = Profile(name, channel)
         self.profiles.append(new_profile)
         
     def delete_profile(self, profile):
