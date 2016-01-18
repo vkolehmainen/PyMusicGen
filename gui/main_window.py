@@ -35,7 +35,7 @@ class MainWindow(QtGui.QMainWindow):
         """Creates the widgets."""
         
         # left widgets
-        self.status_bar = StatusBar()
+        self.status_bar = StatusBar(self)
         self.profile_view = ProfileView()
         self.visualizer = Visualizer()
         self.songs_dock = SongsDockWidget()

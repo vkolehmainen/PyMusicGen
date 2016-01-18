@@ -25,7 +25,6 @@ class Profile():
         vel = random.randint(40,80)
         
         note_str = str(chn) + "-" + str(note) + "-" + str(len) + "-" + str(vel)
-        print(note_str)
         lst = [note_str, "0", "0", "0"]
              
         return lst

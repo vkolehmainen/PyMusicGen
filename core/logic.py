@@ -20,7 +20,7 @@ class Logic():
         self.set_BPM(BPM)
         self.playlist = self.get_empty_playlist()
      
-        self.timer = QtCore.QTimer() 
+        self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.next_frame) 
         self.frame = self.bar_division
         self.bar = 3
@@ -31,7 +31,7 @@ class Logic():
                        
         self.BPM = BPM
         self.bar_length = 60 / self.BPM
-        self.frame_length = self.bar_length / self.bar_division   
+        self.frame_length = self.bar_length / self.bar_division
         
     def set_timer_interval(self):
         
