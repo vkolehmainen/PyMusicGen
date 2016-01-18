@@ -9,12 +9,13 @@ class Logic():
     def __init__(self, BPM, bar_division):
         """Keeps the program running and delegates tasks to sub-classes."""
         
-        self.profile_manager = ProfileManager()
-        self.midi = Midi(0)
+        self.profile_manager = ProfileManager(self)
+        self.midi = Midi(4)
         self.database_manager = DatabaseManager()
         self.chord_generator = ChordGenerator()
         
         self.profile_manager.add_profile("Profile1", 1)
+        self.profile_manager.add_profile("Profile2", 2)
         
         self.bar_division = bar_division  # tells how many frames one bar is broken into
         self.set_BPM(BPM)

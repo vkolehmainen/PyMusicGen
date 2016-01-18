@@ -2,9 +2,10 @@ from core.profile import Profile
 
 class ProfileManager():
     
-    def __init__(self):
+    def __init__(self, logic):
         """Manages instrument profiles."""
         
+        self.logic = logic
         self.profiles = []
         
     def add_profile(self, name, channel):
@@ -14,7 +15,7 @@ class ProfileManager():
         @type name: string
         """
         
-        new_profile = Profile(name, channel)
+        new_profile = Profile(name, channel, self)
         self.profiles.append(new_profile)
         
     def delete_profile(self, profile):

@@ -57,3 +57,6 @@ class RhythmGenerator:
         i = pattern.index(1)
         pattern = pattern[i:] + pattern[0:i]
         return pattern
+    
+gen = RhythmGenerator()
+print(gen.bjorklund(3, 11))

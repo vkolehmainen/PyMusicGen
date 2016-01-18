@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
     def init_core(self):
         """Initializes the core."""
         
-        self.logic = Logic(40, 4)
+        self.logic = Logic(20, 11)
         pass
 
 
