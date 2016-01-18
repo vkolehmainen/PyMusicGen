@@ -15,7 +15,6 @@ class Logic():
         self.chord_generator = ChordGenerator()
         
         self.profile_manager.add_profile("Profile1", 1)
-        self.profile_manager.add_profile("Profile2", 2)
         
         self.bar_division = bar_division  # tells how many frames one bar is broken into
         self.set_BPM(BPM)
@@ -83,9 +82,11 @@ class Logic():
     def send_midi_notes(self, frame):
         """Sends the individual MIDI notes of the current frame to Midi class."""
         
-        for note in self.playlist[frame]:    
-            channel, note, length, velocity = self.decode(note)
-            #self.midi.play_note(channel, note, length, velocity)
+        for note in self.playlist[frame]:
+               
+            if note is not "0":
+                channel, note, length, velocity = self.decode(note)
+                self.midi.play_note(channel, note, length, velocity)
             
     def decode(self, note):
         """Decodes a note.
@@ -93,9 +94,10 @@ class Logic():
         @type note: str in format: CHN-NOTE-LEN-VEL eg. 1-50-16-65
         @rtype: int, int, int, int
         """
-        
-        return "channel", "note", "length", "velocity"
-    
+
+        parts = note.split("-")
+        return int(parts[0]), int(parts[1]), int(parts[2]), int(parts[3])
+      
     def get_empty_playlist(self):
         """Returns an empty list of lists corresponding to the bar_division value."""
         

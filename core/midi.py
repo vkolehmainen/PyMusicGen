@@ -88,7 +88,7 @@ class Midi():
         
         self.output.note_on(note, velocity, channel)
         
-        self.queue.push(note, velocity, channel, length)
+        #self.queue.push(note, velocity, channel, length)
         #SEE self.queue AT __init__
     
     def choose_chord(self):       
