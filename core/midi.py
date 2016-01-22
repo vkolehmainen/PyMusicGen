@@ -109,7 +109,7 @@ if __name__ == "__main__":
     for device_id in range(0, pygame.midi.get_count()):
         print("At ID " + str(device_id) + " the device info is: " + str(pygame.midi.get_device_info(device_id)))
     
-    midi = Midi(4)
+    midi = Midi(0)
     note = 60
     
     #Loop that starts from MIDI note 60 and randomly increases/decreases the base note and plays chords relative to it

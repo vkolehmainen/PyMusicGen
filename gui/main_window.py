@@ -67,7 +67,7 @@ class MainWindow(QtGui.QMainWindow):
         """Initializes the menu bar."""
         
         add_menu(self.menuBar(), self)
-    
+     
     def init_layout(self):
         """Initializes the layout."""              
 
@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
     def init_core(self):
         """Initializes the core."""
         
-        self.logic = Logic(20, 11)
+        self.logic = Logic(20, 7)
         pass
 
 
