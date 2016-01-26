@@ -43,7 +43,7 @@ class Profile():
         
     def get_rand_note(self):
 
-        chn = 1
+        chn = self.channel
         note = random.choice([39, 41, 43, 44, 46, 48, 50, 51, 53, 55, 56, 58, 60, 62])
         len = random.randint(1,4)
         vel = random.randint(30,90)

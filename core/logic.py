@@ -10,12 +10,12 @@ class Logic():
         """Keeps the program running and delegates tasks to sub-classes."""
         
         self.profile_manager = ProfileManager(self)
-        self.midi = Midi(4)
+        self.midi = Midi(0)
         self.database_manager = DatabaseManager()
         self.chord_generator = ChordGenerator()
         
-        self.profile_manager.add_profile("Profile1", 1)
-        self.profile_manager.add_profile("Profile2", 2)
+        self.profile_manager.add_profile("Profile1", 4)
+        self.profile_manager.add_profile("Profile2", 9)
         
         self.bar_division = bar_division  # tells how many frames one bar is broken into
         self.set_BPM(BPM)
@@ -43,7 +43,7 @@ class Logic():
         
         # create new chords every four bars
         if self.bar == 3 and self.frame == self.bar_division:
-            self.next_chords = self.chord_generator.generate_next_chords()
+            self.next_chords = self.chord_generator.get_next_chords()
             self.frame = 0
             self.bar = -1
             self.chord_idx = 0
